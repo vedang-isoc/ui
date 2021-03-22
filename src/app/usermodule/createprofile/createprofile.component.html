@@ -1,0 +1,24 @@
+
+<div *ngIf="isActivated && !isProfileCreated">
+<form [formGroup]="profileForm">
+    Enter Fullname :<input type="text" formControlName="fullName"><br><br>
+    Select Birthdate:<input type="date" formControlName="birthdate"><br><br>
+    Select gender: <input type="radio" formControlName="gender" value="Male"><label>Male</label><input type="radio" formControlName="gender" value="Female"><label>Female</label><br><br>
+    <!-- Choose Profilepic:<input type="file" formControlName="userImage" (change)='onFileChanged($event)'><br><br>  -->
+    <input type="submit" value="Create Profile" (click)="createProfile()">
+    
+</form>
+</div>
+<div *ngIf="!isActivated">
+You need to activate your account first
+</div>
+<div *ngIf="isActivated && isProfileCreated">
+    <form [formGroup]="profileForm">
+        Enter Fullname :<input type="text" formControlName="fullName"><br><br>
+        Select Birthdate:<input type="date" formControlName="birthdate"><br><br>
+        Select gender: <input type="radio" formControlName="gender" value="Male"><label>Male</label><input type="radio" formControlName="gender" value="Female"><label>Female</label><br><br>
+        <!-- Choose Profilepic:<input type="file" formControlName="userImage" (change)='onFileChanged($event)'><br><br>  -->
+        <input *ngIf="!isProfileCreated" type="submit" value="Create Profile" (click)="createProfile()">
+        <input *ngIf="isProfileCreated" type="submit" value="Update Profile" (click)="updateProfile()">
+    </form>
+</div>

@@ -1,0 +1,16 @@
+<!-- <header>
+  <nav>
+    <a routerLink="/user"  *ngIf="(userrole | async) === 'user'">User Dashboard</a>
+
+  
+    <a routerLink="/register" *ngIf="(userrole | async) === null">Register</a>
+    <a *ngIf="(userrole | async) === null"  routerLink="/login">Login</a>
+    <a  *ngIf="(userrole | async) === 'user'" (click)="logout()">Logout</a>
+    <a (click)="profile()" *ngIf="(userrole | async) === 'user'">Profile</a>
+    <a routerLink="/forgot" *ngIf="(userrole | async) === null" >forgot-password</a>
+
+  </nav>
+</header> -->
+
+<app-header></app-header>
+<router-outlet></router-outlet>

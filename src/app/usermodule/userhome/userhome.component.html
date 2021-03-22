@@ -1,0 +1,143 @@
+<div class="myBackground myFonts">
+
+
+    <div class="container-fluid header-color">
+      <div class="container">
+        <div class="row welcome-header">
+          <div class="col-lg-4">
+            <span class=" h2">Welcome {{username}}</span>
+          </div>
+          <div class="col-lg-8">
+            <div *ngIf="!activated">
+              <button (click)="sendotp()" class="float-end btn btn-primary">Verify Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="container-fluid identifyLinks">
+      <div class="row justify-content-center">
+        <div class="col-lg-2 sm-3 xs-3 col-3 myLink"><a class="myitems" (click)="home()">Home</a></div>
+        <div class="col-lg-2 sm-3 xs-3 col-3 myLink "><a class="myitems" (click)="pro()">In progress</a></div>
+        <div class="col-lg-2 sm-3 xs-3 col-3 myLink "><a (click)="comp()" class="myitems">Completed</a></div>
+      </div>
+    </div>
+
+
+    <div class="container bg-light px-3 pt-md-5 px-md-5 text-center overflow-hidden my-5" *ngIf="home1">
+
+      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+
+          <div class="carousel-item " *ngFor="let item of slides; let i = index" [ngClass]="{'active' : i == 0}"
+            data-bs-interval="3000">
+
+            <div class="row">
+              <div class="col-lg-1"></div>
+              <div class="col-lg-3" *ngFor="let card of item; let cardIndex = index">
+
+                <div class="card mx-3 my-3 categorycards">
+
+                  <div class="col-lg-12">
+
+                    <img src="{{card.categoryLogo}}" class="card-img-top img-fluid" alt="...">
+
+                    <div class="card-body">
+                      <h5 class="card-title">{{card.categoryName | titlecase}}</h5>
+                      <p class="card-text">{{card.categoryDesc}}</p>
+                      <button type="button" class="w-100 btn  btn-outline-primary myBtn">View Courses</button>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-1"></div>
+            </div>
+          </div>
+        </div>
+
+        <a class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </a>
+        <a class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </a>
+      </div>
+
+    </div>
+
+
+
+    <div class="container my-5" *ngIf="progress">
+      <div class="row">
+
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8" *ngFor="let ecourse of EnrolledCourseList; let cardIndex = index">
+          <div class="box">
+            <div class="card">
+              <h5 class="card-header">Course</h5>
+              <div class="card-body">
+                <h5 class="card-title">{{ecourse.courseName}}</h5>
+                <p class="card-text">{{ecourse.courseDesc}}</p>
+                <p>Started On : {{EcourseDates[cardIndex]}}</p>
+                <p>Progress : {{ecourse.progress}}%</p>
+                <button class="btn btn-primary me-4 myCourseBtn" (click)="view(ecourse.courseId)">view course</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2"></div>
+
+      </div>
+    </div>
+    
+    <div class="container" *ngIf="completed">
+      <div class="col-lg-8" *ngFor="let fcourse of FinishedCourseList; let cardIndex = index">
+        <div class="box">
+          <div class="card">
+            <h5 class="card-header">Course</h5>
+            <div class="card-body">
+              <h5 class="card-title">{{fcourse.courseName}}</h5>
+              <p class="card-text">{{fcourse.courseDesc}}</p>
+              <p>Completed On : {{FcourseDates[cardIndex]}}</p>
+              <p>Completion Certificate </p><embed [src]="url | safe : Certificates[cardIndex]" width="300px" height="50px" > 
+                <button class="btn btn-primary me-4 myCourseBtn" (click)="sendcerti(fcourse.courseId)">Mail me my Certificate</button>
+              <div>
+                <button class="btn btn-primary me-4 myCourseBtn" (click)="view(fcourse.courseId)">view course</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container">
+      <div class="row mt-3 display-6 headingFonts">All Courses</div>
+      <div class="row my-4">
+        <div class="col-lg-12">
+          <div class="row">
+            <div class="card mx-3 my-3 coursesCards" style="width: 18rem;" *ngFor="let c of courses">
+              <img src="{{c.courselogo}}" class="card-img-top img-fluid" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{c.courseName | titlecase}}</h5>
+                <p class="card-text">{{c.courseDesc}}</p>
+                <p class="card-text">Category :: {{c.category}}</p>
+
+                <p class="card-text">{{c.coursePrice | currency: 'INR'}}</p>
+                <p class="card-text">
+                  <ngx-input-star-rating [disabled]="true" [value]="c.rating"></ngx-input-star-rating>
+                </p>
+                <button class="btn btn-primary me-4 myCourseBtn" (click)="view(c.courseId)">view course</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-lg-6">
+        <div *ngFor="let v of videoList ; let cardIndex = index" class="card mt-5">
+            <div class="card-header">{{v.videoName | titlecase}}</div>
+            <div class="card-body"><p class="lead">{{v.videoDesc}}</p></div>
+            <div class="card-body">Course: {{v.course | titlecase}}</div>
+            <div class="card-body">Status : {{videoStatus[cardIndex]}}</div>
+            
+            <!-- <div>ID: {{v.videoId}}</div> -->
+            <button class="btn-dark" (click)="fetch(v.videoPath, v.videoId)" value="{{v.videoPath}}">See Video</button>
+        </div>
+    </div>
+    <div class="col-lg-9 video-box">
+        <video src="../assets/{{videourl}}" controls id="video" #video></video>
+    </div>
+</div>
+<button (click)="doubleplayback()">>>2x</button>
+
+
+
+
+
+
+
+ 

@@ -1,0 +1,186 @@
+<!-- <h1>Register Form</h1>
+   <form [formGroup]="registerForm">
+   
+       Username:<input type="text" formControlName="username"><br><br>
+       Email:<input type="text" formControlName="email"><br><br>
+       Password:<input type="password" formControlName="password"><br><br>
+       <input type="submit" value="Register" (click)="registeruser()">
+   
+   </form> -->
+<!-- <h1 mat-dialog-title>Dialog with elements</h1>
+   <div mat-dialog-content></div>
+   <div mat-dialog-actions>
+     <button mat-button mat-dialog-close>Close</button>
+   </div> -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div *ngIf="!forgotshow" class="col-lg-4 sm-3 xs-3 col-3 myLink h5"><a class="myitems" (click)="hideshow()">Register</a></div>
+        <div *ngIf="!forgotshow" class="col-lg-4 sm-3 xs-3 col-3 myLink h5"><a class="myitems" (click)="hideshow1()">Login</a></div>
+        <div *ngIf="forgotshow" class="col-lg-4 sm-3 xs-3 col-3 myLink h5"><a class="myitems" >Forgot password</a></div>
+    </div>
+</div>
+<hr>
+<div class="container" *ngIf="regshow">
+    <form [formGroup]="registerForm">
+        <div class="row mb-2">
+            <div class="col-lg-4">
+                Username:
+            </div>
+            <div class="col-lg-8">
+                <input type="text" formControlName="username">
+                <div *ngIf="registerForm.controls.username?.invalid && registerForm.controls.username?.touched"><h6>Enter minimum 5 characters</h6></div>
+            </div>
+        </div>
+        <div class="row  mb-2">
+            <div class="col-lg-4">
+                Email:
+            </div>
+            <div class="col-lg-8">
+                <input type="text" formControlName="email" required>
+                <div *ngIf="registerForm.controls.email?.invalid && registerForm.controls.email?.touched"><h6>Enter valid email</h6></div>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-lg-4">
+                Password:
+            </div>
+            <div class="col-lg-8">
+                <input type="password" formControlName="password">
+                <div *ngIf="registerForm.controls.password?.invalid && registerForm.controls.password?.touched"><h6>Enter min 1 digit,uppercase,lowercase and min length 6 and max length 10</h6></div>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-lg-4">
+            </div>
+            <div class="col-lg-8">
+                <button type="submit" mat-raised-button color="primary"
+                    (click)="registeruser()">Register</button>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-lg-4">
+            </div>
+            <div class="col-lg-8">
+                <div *ngIf="email && !username"> Account already exists on this email </div>
+                <div *ngIf="username"> This username has already been taken </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- login -->
+<div *ngIf="loginshow">
+    <form [formGroup]="loginForm">
+        <div class="row mb-2">
+            <div class="col-lg-4">
+            </div>
+            <div class="col-lg-8">
+                <h6 *ngIf="!isLocked">Your Account Will Get locked On 3 Failed Login Attempts</h6>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-lg-4">
+                Username:
+            </div>
+            <div class="col-lg-8">
+                <input type="text" formControlName="username">
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-lg-4">
+                Password:
+            </div>
+            <div class="col-lg-8">
+                <input type="password" formControlName="password">
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-lg-4">
+            </div>
+            <div class="col-lg-8">
+                <button type="submit" mat-raised-button color="primary" value="Login"
+                    (click)="loginuser()">Login</button>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-lg-4">
+                <button type="submit" mat-raised-button color="primary" value="Login"
+                    (click)="forgot()">Forgot-password</button>
+            </div>
+            <div class="col-lg-8">
+                <div *ngIf="isLocked">Your Account has been locked
+                    <h4>You need to send unlock request through mail to unlock you account</h4>
+                </div>
+                <div *ngIf="wpassword && !isLocked">Wrong Password No Of Failed Attempts {{failedattempts}}</div>
+                <div *ngIf="wusername && !isLocked">Username Not Found</div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- forgot password -->
+<div class="container" *ngIf="forgotshow">
+    <form [formGroup]="forgotform">
+        <div class="row  mb-2">
+            <div class="col-lg-3">
+                <input type="text" formControlName="email" placeholder="Enter registered email">
+            </div>
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <button type="submit" mat-raised-button color="primary" *ngIf="!otpblock" (click)="starttimer()">Send otp</button>
+            </div>
+            <div class="col-lg-6" *ngIf="!fields">
+              
+                <button mat-raised-button color="primary"  (click)='otpresend()'>Resend</button> otp in <label>{{timeLeft}} Seconds</label>
+            </div>
+        </div>
+        <div class="row mb-2" *ngIf="!temp">
+            <div class="col-lg-4">
+            </div>
+            <div class="col-lg-8">
+                <div > this email does not exists</div>
+            </div>
+        </div>
+        <div class="row mb-2" *ngIf="otpblock">
+            <div class="col-lg-6">
+                <input type="text" formControlName="otp" placeholder="Enter otp">
+            </div>
+            <div class="col-lg-6">
+                <button type="submit" mat-raised-button color="primary" *ngIf="!fields" (click)="verifyotp()">Verify otp</button>
+            </div>
+           
+        </div>
+        <div class="row mb-2" *ngIf="!match">
+            <div class="col-lg-4">
+            </div>
+            <div class="col-lg-8">
+                <div >otp does not match</div>
+            </div>
+        </div>
+        <div class="row mb-2" *ngIf="fields">
+            <div class="row">
+                <div class="col-lg-6">
+                    <input type="password" formControlName="password" placeholder="Enter password">
+                </div>
+                <div class="col-lg-6">
+                    <input type="password" formControlName="cpassword" placeholder="Confirm password">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                </div>
+                <div class="col-lg-8">
+                    <button type="submit" mat-raised-button color="primary"
+                        (click)="submit()">Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2" *ngIf="!matchpassword">
+            <div class="col-lg-4">
+            </div>
+            <div class="col-lg-8">
+                <div >Password does not match</div>
+            </div>
+        </div>
+    </form>
+</div>

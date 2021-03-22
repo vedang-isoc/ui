@@ -1,0 +1,9 @@
+<p>verify works!</p>
+
+<form [formGroup]="verifyForm">
+    Enter Otp:<input type="text" formControlName="otp"><br><br>
+    
+    <button type="submit" value="verify" (click)="verify()" mat-raised-button color="primary">verify</button><br><br>
+    <button type="submit" value="resendotp" (click)="resendotp()" mat-raised-button color="primary">resendotp</button>
+    
+</form>
